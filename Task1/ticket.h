@@ -25,8 +25,6 @@ void inputTicketStructure(ticket* ticketInfo, FILE* iFile, FILE* iBinFile);
 
 void inputTicketStructureToFiles(int i, ticket* ticketInfo, FILE* iFile, FILE* iBinFile);
 
-void theMostOfExpensiveTicket(int price);
-
 void inputNumberOfTickets(int* number);
 
 #endif //TASK1_TICKET_H

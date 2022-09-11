@@ -3,8 +3,8 @@
 #include "ticket.h"
 int main() {
     ticket *ticketInfo;
-    int numberOfTickets;
     int i, j;
+    int numberOfTickets;
     FILE *iFile;
     iFile = fopen(R"(C:\textbooks\labs\oop\workshop\Task1\testTask1.txt)", "a");
     FILE *iBinFile;
@@ -43,6 +43,8 @@ int main() {
     fclose(iFile);
     fclose(iBinFile);
     free(ticketInfo);
+
+
     return 0;
 }
 

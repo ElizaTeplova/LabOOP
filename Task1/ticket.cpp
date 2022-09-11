@@ -25,14 +25,14 @@ void inputTicketStructure(ticket* ticketInfo, FILE* iFile, FILE* iBinFile){
     printf("Train: %d\n", (ticketInfo + i)->train);
     free(strForChecking); strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
 
-    regular = "[a-zA-Z\\s]{1,15}";
-    printf("Enter element of structure: station1, (char), [a-zA-Z\\s]{1,15}\n");                                //input ticket: station1
+    regular = "[A-Z][a-zA-Z\\s]{1,13}";
+    printf("Enter element of structure: station1, (char), [A-Z\\s]{1,15}\n");                                //input ticket: station1
     do { scanf("%s", strForChecking); } while (!std::regex_match(strForChecking, result, regular));
     for (j = 0; j < numbersOfAvailableSymbols; j++) (ticketInfo + i)->station1[j] = *(strForChecking + j);
     printf("Station1: %s\n", (ticketInfo + i)->station1);
     free(strForChecking); strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
 
-    printf("Enter element of structure: station2, (char), [a-zA-Z\\s]{1,15}\n");                                //input ticket: station1
+    printf("Enter element of structure: station2, (char), [A-Z\\s]{1,15}\n");                                //input ticket: station1
     do { scanf("%s", strForChecking); } while (!std::regex_match(strForChecking, result, regular));
     for (j = 0; j < numbersOfAvailableSymbols; j++) (ticketInfo + i)->station2[j] = *(strForChecking + j);
     printf("Station1: %s\n", (ticketInfo + i)->station2);
@@ -97,10 +97,6 @@ void inputTicketStructureToFiles(int i, ticket* ticketInfo, FILE* iFile, FILE* i
     fprintf(iFile,"%-5d",   (ticketInfo + i)->coach);
     fprintf(iFile,"%-3d",   (ticketInfo + i)->seat);
     fprintf(iFile,"%-4d\n", (ticketInfo + i)->price);
-}
-
-void theMostOfExpensiveTicket(int price){
-
 }
 
 void inputNumberOfTickets(int *number) { do { scanf("%d", number); } while (*number <= 0 || *number >= 11); }
