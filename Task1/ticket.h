@@ -1,7 +1,7 @@
 //
 // Created by mrbab on 11.09.2022.
 //
-
+#include <cstdio>
 #ifndef TASK1_TICKET_H
 #define TASK1_TICKET_H
 #define numbersOfAvailableSymbols 15
@@ -16,11 +16,14 @@ struct ticket{
     int     coach;
     int     seat;
     int     price;
+    bool    theSame = false;
 };
 
 typedef struct ticket ticket;
 
-void inputTicketStructure(ticket* ticketInfo);
+void inputTicketStructure(ticket* ticketInfo, FILE* iFile, FILE* iBinFile);
+
+void inputTicketStructureToFiles(int i, ticket* ticketInfo, FILE* iFile, FILE* iBinFile);
 
 void theMostOfExpensiveTicket(int price);
 

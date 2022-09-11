@@ -7,18 +7,21 @@
 #include <regex>
 #include <string>
 
-void inputTicketStructure(ticket* ticketInfo){
+void inputTicketStructure(ticket* ticketInfo, FILE* iFile, FILE* iBinFile){
     static int i = 0;
     static int j = 0;
     int multiplier = 1;
     char* strForChecking = nullptr;
     strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
     std::cmatch result;
-    std::regex regular("[1-9]");
+    std::regex regular("[1-9]\\d{2}");
 
-    printf("Enter element of structure: train (int), [0 - 9]\n");                                       //input ticket: train
+    printf("Enter element of structure: train (int), [1-9]{3}\n");                                       //input ticket: train
     do { scanf("%s",strForChecking); } while (!std::regex_match(strForChecking, result, regular));
-    (ticketInfo + i)->train = (int) strForChecking[0] - 48;
+    for (j = 2; j >= 0; j--){
+        (ticketInfo + i)->train += ((int) strForChecking[j] - 48) * multiplier;
+        multiplier*=10;
+    } multiplier = 1;
     printf("Train: %d\n", (ticketInfo + i)->train);
     free(strForChecking); strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
 
@@ -79,6 +82,21 @@ void inputTicketStructure(ticket* ticketInfo){
     }
     printf("price: %d\n", (ticketInfo + i)->price);
     free(strForChecking);
+    i++;
+
+}
+
+
+void inputTicketStructureToFiles(int i, ticket* ticketInfo, FILE* iFile, FILE* iBinFile){
+    fwrite((ticketInfo + i), sizeof(ticket), 1, iBinFile);
+    fprintf(iFile,"%-5d",   (ticketInfo + i)->train);
+    fprintf(iFile,"%-16s",  (ticketInfo + i)->station1);
+    fprintf(iFile,"%-16s",  (ticketInfo + i)->station2);
+    fprintf(iFile,"%-10s",  (ticketInfo + i)->depDay);
+    fprintf(iFile,"%-10s",  (ticketInfo + i)->depTime);
+    fprintf(iFile,"%-5d",   (ticketInfo + i)->coach);
+    fprintf(iFile,"%-3d",   (ticketInfo + i)->seat);
+    fprintf(iFile,"%-4d\n", (ticketInfo + i)->price);
 }
 
 void theMostOfExpensiveTicket(int price){
