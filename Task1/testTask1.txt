@@ -7,8 +7,9 @@
 456  Moscow          Omsk            12.02.04  12:00:00 5    4  2900
 666  SPB             Tomsk           06.07.21  02:00:00 1    2  4500
 666  SPB             Tomsk           06.07.21  02:00:00 1    5  2700
-123  Perekopka       Volgograd       30.08.04  13:30:50 12    2  5000
 666  SPB             Tomsk           06.07.21  02:00:00 7    2  4500
 666  SPB             Tomsk           06.07.21  02:00:00 1    3  3900
 123  Perekopka       Volgograd       03.03.05  19:00:00 7    3  1500
 456  Moscow          Samara          03.09.22  12:00:00 6    5  2500
+123  Perekopka       Volgograd       30.08.04  13:30:50 7    5  2000
+
