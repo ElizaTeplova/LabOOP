@@ -84,11 +84,13 @@ void inputTicketStructure(ticket* ticketInfo, FILE* iFile, FILE* iBinFile){
     free(strForChecking);
     i++;
 
+    fwrite((ticketInfo + i), sizeof(ticket), 1, iBinFile);
+
 }
 
 
 void inputTicketStructureToFiles(int i, ticket* ticketInfo, FILE* iFile, FILE* iBinFile){
-    fwrite((ticketInfo + i), sizeof(ticket), 1, iBinFile);
+
     fprintf(iFile,"%-5d",   (ticketInfo + i)->train);
     fprintf(iFile,"%-16s",  (ticketInfo + i)->station1);
     fprintf(iFile,"%-16s",  (ticketInfo + i)->station2);
@@ -99,4 +101,4 @@ void inputTicketStructureToFiles(int i, ticket* ticketInfo, FILE* iFile, FILE* i
     fprintf(iFile,"%-4d\n", (ticketInfo + i)->price);
 }
 
-void inputNumberOfTickets(int *number) { do { scanf("%d", number); } while (*number <= 0 || *number >= 11); }
+void inputNumberOfTickets(int *number) { do { scanf("%d", number); } while (*number <= 0 || *number >= 15); }

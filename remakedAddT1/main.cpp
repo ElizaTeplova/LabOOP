@@ -3,7 +3,7 @@
 #include "remaked.h"
 
 int main(){
-
+    //bbb = {1,"aa","aa","dd:mm:yy","12:00:00",1,1,1, false};
     Ticket* personalTicket = (Ticket* ) calloc(1, sizeof(Ticket));
     FILE* outOfFile = fopen(R"(C:\textbooks\labs\oop\workshop\Task1\testTask1.txt)", "r");
     FILE* inToFile = fopen(R"(C:\textbooks\labs\oop\workshop\remakedAddT1\sortedTrains.txt)", "w");
