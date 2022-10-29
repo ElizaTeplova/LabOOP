@@ -3,6 +3,7 @@
 #include <iostream>
 #include <iomanip>
 #include <ios>
+#include <string>
 using namespace std;
 
 Ticket &Ticket::operator=(Ticket &ticket1) = default;
@@ -292,4 +293,56 @@ int theMostExpensiveTicket(Ticket *ticketInfo){
 void Ticket::setTrain(){
     std::cout << "Enter train number: ";
     std::cin>>this->train;
+}
+
+//              changed version
+
+int Ticket::getTrain() const {
+    return this->train;
+}
+
+std::string Ticket::getStation1()  const{
+    return this->station1;
+}
+std::string Ticket::getStation2()   const{
+    return this->station2;
+}
+std::string Ticket::getDepDay()    const{
+    return this->depDay;
+}
+std::string Ticket::getDepTime()    const{
+    return this->depTime;
+}
+int         Ticket::getCoach()      const{
+    return this->coach;
+}
+
+int         Ticket::getSeat() const {
+    return this->seat;
+}
+
+int         Ticket::getPrice() const {
+    return this->price;
+}
+
+void        Ticket::setStation1(char* station1) {
+    this->station1.assign(station1);
+}
+void        Ticket::setStation2(char* station2){
+    this->station2.assign(station2);
+}
+void        Ticket::setDepDay(char* depDay){
+    this->depDay.assign(depDay);
+}
+void        Ticket::setDepTime(char* depTime){
+    this->depTime.assign(depTime);
+}
+void        Ticket::setCoach(int coach){
+    this->coach = coach;
+}
+void        Ticket::setSeat(int seat){
+    this->seat = seat;
+}
+void        Ticket::setPrice(int price){
+    this->price = price;
 }

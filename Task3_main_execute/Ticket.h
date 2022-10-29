@@ -45,6 +45,28 @@ public:
     friend bool isCorrect(Ticket* ticketInfo, Ticket* personalTicket, int low, int high);
     friend int theMostExpensiveTicket(Ticket *ticketInfo);
     void setTrain();
+
+//              changed version
+
+    int getTrain() const;
+    std::string getStation1()   const;
+    std::string getStation2()   const;
+    std::string getDepDay()    const;
+    std::string getDepTime()   const;
+    int         getCoach()      const;
+    int         getSeat()       const;
+    int         getPrice()      const;
+
+    void        setStation1(char* station1);
+    void        setStation2(char*  station2);
+    void        setDepDay(char* depDay);
+    void        setDepTime(char* depTime);
+    void        setCoach(int coach);
+    void        setSeat(int seat);
+    void        setPrice(int price);
+
+//    bool isCorrect(int low, int high);
+
 };
 
 #endif //TASK3_TICKET_H

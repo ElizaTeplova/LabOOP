@@ -26,7 +26,7 @@ RailwayStation::RailwayStation(int numberOfTrainsClass, std::string& fileName, s
     while (!inFile.eof()){
         for (i = 0; i < 8; i++){
             inFile >> s[i];
-            std::cout << s[i] << std::endl;
+//            std::cout << s[i] << std::endl;
         }
 //        ticket.emplace_back(new Ticket(std::atoi(s[0].c_str()), s[1], s[2], s[3], s[4], std::atoi(s[5].c_str()), std::atoi(s[6].c_str()), std::atoi(s[7].c_str())));
         ticket.emplace_back(new Ticket(s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7]));

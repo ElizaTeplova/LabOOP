@@ -378,7 +378,7 @@ void Ticket::setTrain(int train) {
 }
 
 Ticket::Ticket(Ticket *pTicket) {
-    this->price = pTicket->getPrice();
+    this->train = pTicket->getTrain();
     this->station1 = pTicket->getStation1();
     this->station2 = pTicket->getStation2();
     this->depDay = pTicket->getDepDay();
@@ -399,7 +399,7 @@ Ticket::Ticket( std::string& train,
 ){
     int n = std::atoi(train.c_str());
     this->train = n;
-//    this->train =       std::atoi(train.c_str());
+    this->train =       std::atoi(train.c_str());
     std::cout << "Ticket: train: " << this->train << std::endl;
     this->station1 =    station1;
     this->station2 =    station2;
