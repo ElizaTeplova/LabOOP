@@ -43,7 +43,7 @@ public:
     friend void showFlight(Ticket* ticketInfo, Ticket* personalTicket);
     friend int numberOfEmptySeats(Ticket* ticketInfo, Ticket* personalTicket, int low, int high);
     friend bool isCorrect(Ticket* ticketInfo, Ticket* personalTicket, int low, int high);
-    friend int theMostExpensiveTicket(Ticket *ticketInfo);
+//    friend int theMostExpensiveTicket(Ticket *ticketInfo);
     void setTrain();
 
 //              changed version
@@ -71,9 +71,7 @@ public:
 
 public:
     Ticket(int train, std::string& station1, std::string& station2, std::string& depDay, std::string depTime, int coach, int seat, int price);
-    Ticket() : Ticket(0, (std::string &) "", (std::string &) "", (std::string &) "", "", 0, 0, 0){
-            std::cout << "Default constructor is called" << std::endl;
-    }
+    Ticket();
     void setTrain(int train);
 
     Ticket(std::string& train,

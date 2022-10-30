@@ -15,16 +15,20 @@ private:
 
     std::string stationAddress;
     std::vector<Ticket> ticket;
+
+    bool isCorrect(Ticket* personalTicket, int low, int high);
+    int numberOfEmptySeats(Ticket* personalTicket, int low, int high);
+    void sortTickets();
 public:
-    RailwayStation() : RailwayStation(sizeTrain, (std::string&)DEFAULT_FILE_NAME, (std::string&)DEFAULT_FILE_PATH){
-
-    }
-    RailwayStation(int numberOfTrainsClass);
+    RailwayStation() : RailwayStation(sizeTrain, (std::string&)DEFAULT_FILE_NAME, (std::string&)DEFAULT_FILE_PATH){ }
     RailwayStation(int numberOfTrainsClass, std::string& fileName, std::string& filePath);
-
     ~RailwayStation(){
         ticket.clear();
     }
+
+    void showFlight(Ticket* personalTicket);
+    int theMostExpensiveTicket()
+
 };
 
 

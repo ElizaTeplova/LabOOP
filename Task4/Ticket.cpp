@@ -282,13 +282,13 @@ bool isCorrect(Ticket* ticketInfo, Ticket* personalTicket, int low, int high){
 //    std::regex_match(strForChecking, result, regular)
 }
 
-int theMostExpensiveTicket(Ticket *ticketInfo){
-    int i, max = 0;
-    for (i = 0; i < numberOfTrains; i++)
-        if (max < (ticketInfo + i)->price)  max = (ticketInfo + i)->price;
-
-    return max;
-}
+//int theMostExpensiveTicket(Ticket *ticketInfo){
+//    int i, max = 0;
+//    for (i = 0; i < numberOfTrains; i++)
+//        if (max < (ticketInfo + i)->price)  max = (ticketInfo + i)->price;
+//
+//    return max;
+//}
 
 void Ticket::setTrain(){
     std::cout << "Enter train number: ";
@@ -327,6 +327,7 @@ int         Ticket::getPrice() const {
 
 void        Ticket::setStation1(char* station1) {
     this->station1.assign(station1);
+//    this->station1.copy(station1, strlen(station1), 0);
 }
 void        Ticket::setStation2(char* station2){
     this->station2.assign(station2);
@@ -351,7 +352,7 @@ void        Ticket::setPrice(int price){
 
 Ticket::Ticket(int train, std::string& station1, std::string& station2, std::string& depDay, std::string depTime, int coach, int seat, int price){
     setTrain(train);
-    setStation1(const_cast<char *>(station1.c_str()));
+    this->station1 = station1;
     setStation2(const_cast<char *>(station2.c_str()));
     setDepDay(const_cast<char *>(depDay.c_str()));
     setDepTime(const_cast<char *>(depTime.c_str()));
@@ -360,18 +361,17 @@ Ticket::Ticket(int train, std::string& station1, std::string& station2, std::str
     setPrice(price);
 }
 
-//Ticket::Ticket() : Ticket(0, (string &) "", (string &) "", (string &) "", (string &) "", 0, 0, 0) {
-//    std::cout << "Default constructor is called" << std::endl;
-//    Ticket(0, (string &) "", (string &) "", (string &) "", "", 0, 0, 0);
-//    this->train = 0;
-//    this->station1 = "";
-//    this->station2 = "";
-//    this->depDay = "";
-//    this->depTime = "";
-//    this->coach = 0;
-//    this->seat = 0;
-//    this->price = 0;
-//}
+Ticket::Ticket() {
+    this->train = 0;
+    this->station1 = "";
+    this->station2 = "";
+    this->depDay = "";
+    this->depTime = "";
+    this->coach = 0;
+    this->seat = 0;
+    this->price = 0;
+    std::cout << "Default constructor is called" << std::endl;
+}
 
 void Ticket::setTrain(int train) {
     this->train = train;
@@ -400,16 +400,16 @@ Ticket::Ticket( std::string& train,
     int n = std::atoi(train.c_str());
     this->train = n;
     this->train =       std::atoi(train.c_str());
-    std::cout << "Ticket: train: " << this->train << std::endl;
+//    std::cout << "Ticket: train: " << this->train << std::endl;
     this->station1 =    station1;
     this->station2 =    station2;
     this->depDay =      depDay;
     this->depTime =     depTime;
     this->coach =       std::atoi(coach.c_str());
-    std::cout << "Ticket: coach: " << this->coach << std::endl;
+//    std::cout << "Ticket: coach: " << this->coach << std::endl;
     this->seat =        std::atoi(seat.c_str());
-    std::cout << "Ticket: seat: " << this->seat << std::endl;
+//    std::cout << "Ticket: seat: " << this->seat << std::endl;
     this->price =       std::atoi(price.c_str());
-    std::cout << "Ticket: price: " << this->price << std::endl;
+//    std::cout << "Ticket: price: " << this->price << std::endl;
 
 }
