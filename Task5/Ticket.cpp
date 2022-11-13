@@ -554,6 +554,33 @@ std::ofstream& operator<<(ofstream &stream, Ticket &ticket) {
 
     return stream;
 }
+
+std::ifstream& operator>>(std::ifstream& stream, Ticket& ticket) {
+    std::string s;
+
+    stream >> s;
+    ticket.train = atoi(s.c_str());
+    stream >> s;
+    ticket.station1 = s;
+    stream >> s;
+    ticket.station2 = s;
+    stream >> s;
+    ticket.depDay = s;
+    stream >> s;
+    ticket.depTime = s;
+    stream >> s;
+    ticket.coach = atoi(s.c_str());
+    stream >> s;
+    ticket.seat = atoi(s.c_str());
+    stream >> s;
+    ticket.price = atoi(s.c_str());
+
+    return stream;
+}
+
+//Ticket Ticket::operator=(Ticket ticket1) {
+//    return ticket1;
+//}
 /*
  * void Ticket::inputTicket(){
     static int i = 0;

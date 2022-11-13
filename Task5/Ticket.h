@@ -31,6 +31,7 @@ private:
 
 public:
     Ticket& operator=(Ticket& ticket1);
+//    Ticket  operator=(Ticket ticket1);
 
     void inputTicket();
     void inputInfoToFile(std::ofstream& oFile);
@@ -68,7 +69,7 @@ public:
 //    bool isCorrect(int low, int high);
 
     Ticket(Ticket *pTicket);
-
+//    Ticket(const Ticket &pticket);
 public:
     Ticket(int train, std::string& station1, std::string& station2, std::string& depDay, std::string depTime, int coach, int seat, int price);
     Ticket();
@@ -83,11 +84,12 @@ public:
            std::string& seat,
             std::string& price
            );
-
+//    lab5: operators overloading
     friend std::ostream& operator<<(std::ostream& stream, Ticket& ticket);
     friend std::istream & operator>>(std::istream& stream, Ticket& ticket);
     bool operator==(const Ticket& personalTicket) const;
     friend std::ofstream& operator<<(std::ofstream& stream, Ticket& ticket);
+    friend std::ifstream& operator>>(std::ifstream& stream, Ticket& ticket);
 };
 
 #endif //TASK3_TICKET_H

@@ -24,12 +24,18 @@ RailwayStation::RailwayStation(int numberOfTrainsClass, std::string& fileName, s
     } else {
         std::cout << "File: " << filePath << "\\" << fileName << " was opened." << std::endl;
     }
-
+    Ticket ticket1;
     while (!inFile.eof()) {
-        for (i = 0; i < 8; i++) {
-            inFile >> s[i];
-        }
-        ticket.emplace_back(new Ticket(s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7]));
+//         ticket1 = new Ticket[1];
+//        inFile >> reinterpret_cast<Ticket &>(ticket1);
+//        for (i = 0; i < 8; i++) {
+//            inFile >> s[i];
+//        }
+        inFile>>ticket1;
+
+//        ticket.emplace_back(new Ticket(s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7]));
+        ticket.emplace_back(new Ticket(ticket1));
+//        ticket.emplace_back(ticket1);
 //        ticket.at(sizeTrain).ticketsOutput(sizeTrain);
         std::cout << sizeTrain << "\t" << ticket.at(sizeTrain);
         sizeTrain++;
