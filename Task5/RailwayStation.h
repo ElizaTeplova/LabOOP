@@ -32,6 +32,7 @@ public:
     void showFlight(Ticket* personalTicket);
     int theMostExpensiveTicket();
 
+    void operator+=(const Ticket& copyTicket);
 };
 
 

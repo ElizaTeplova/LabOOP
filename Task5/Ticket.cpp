@@ -159,7 +159,8 @@ void sortInfo(Ticket* ticketInfo){
 }
 
 void Ticket::ticketsOutput(int i) {
-    std::cout << "i: " << std::setw(2) << i << std::setw(5) << this->train;
+    std::cout.setf(std::ios_base::left);
+    std::cout << "i: " << std::setw(4) << i << std::setw(5) << this->train;
     std::cout << std::setw(15) << this->station1;
     std::cout << std::setw(15) << this->station2;
     std::cout << std::setw(10) << this->depDay;
@@ -413,3 +414,223 @@ Ticket::Ticket( std::string& train,
 //    std::cout << "Ticket: price: " << this->price << std::endl;
 
 }
+
+std::ostream& operator<<(std::ostream &stream, Ticket &ticket) {
+
+    stream.setf(std::ios_base::left);
+    stream << std::setw(5) << ticket.train;
+    stream << std::setw(15) << ticket.station1;
+    stream << std::setw(15) << ticket.station2;
+    stream << std::setw(10) << ticket.depDay;
+    stream << std::setw(10) << ticket.depTime;
+    stream << std::setw(3)  << ticket.coach;
+    stream << std::setw(3)  << ticket.seat;
+    stream << std::setw(6)  << ticket.price << std::endl;
+    return stream;
+}
+
+std::istream& operator>>(std::istream& stream, Ticket& ticket) {
+    static int i = 0;
+    static int j = 0;
+    int multiplier = 1;
+    char* strForChecking;
+    strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
+    std::cmatch result;
+    std::regex regular("[1-9]\\d{2}");
+    printf("Enter element of structure: train (int), [1-9]{3}\n");                                       //input Ticket: train
+    do { stream >> strForChecking; } while (!std::regex_match(strForChecking, result, regular));
+    for (j = 2; j >= 0; j--){
+        ticket.train += ((int) strForChecking[j] - 48) * multiplier;
+        multiplier*=10;
+    } multiplier = 1;
+    std::cout << "Train: " << ticket.train << std::endl;
+    free(strForChecking); strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
+
+    regular = "[A-Z][a-zA-Z\\s]{1,13}";
+    std::cout<<"Enter element of structure: station1, (char), [A-Z\\s]{1,15}\n";
+    do { stream >> strForChecking; } while (!std::regex_match(strForChecking, result, regular));
+    for (j = 0; j < numbersOfAvailableSymbols; j++) ticket.station1 += *(strForChecking + j);
+    std::cout << "Station1: " << ticket.station1 << std::endl;
+    free(strForChecking); strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
+
+    std::cout << "Enter element of structure: station2, (char), [A-Z\\s]{1,15}\n";
+    do { stream >> strForChecking; } while (!std::regex_match(strForChecking, result, regular));
+    for (j = 0; j < numbersOfAvailableSymbols; j++) ticket.station2 += *(strForChecking + j);
+    std::cout << "Station2: " << ticket.station2 << std::endl;
+    free(strForChecking); strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
+
+    regular = R"(\d\d\.\d\d.\d\d)";
+    std::cout << "Enter element of structure: depDay, (char), \\d\\d.\\d\\d.\\d\\d\n";
+    do { stream >> strForChecking; } while (!std::regex_match(strForChecking, result, regular));
+    for (j = 0; j < 8; j++) ticket.depDay += *(strForChecking + j);
+    std::cout << "depDay: " << ticket.depDay << std::endl;
+    free(strForChecking); strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
+
+    regular = R"([0-2]\d:[0-5]\d:[0-5]\d)";
+    std::cout << "Enter element of structure: depTime, (char), hh:mm:ss\n";
+    do { stream >> strForChecking; } while ( !std::regex_match(strForChecking, result, regular) ||
+                                               (strForChecking[0] == '2') &&
+                                               ((int )strForChecking[1] - 48 > 3));
+    for (j = 0; j < 8; j++) ticket.depTime += *(strForChecking + j);
+    std::cout << "depTime: " << ticket.depTime << std::endl;
+    free(strForChecking); strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
+
+    regular = R"([1-9]\d{0,2})";
+
+    std::cout << "Enter element of structure: coach, (int), [1-9]\\d{0,2}\n";
+    do { stream >> strForChecking; } while ( !std::regex_match(strForChecking, result, regular));
+    for (j = 0; j < numbersOfAvailableSymbols; j++) { if (strForChecking[j] == 0) break; } j--;
+    for (; j>=0; j--){
+        ticket.coach += ((int )strForChecking[j] - 48) * multiplier;
+        multiplier*=10;
+    }
+    std::cout << "coach: " << ticket.coach << std::endl;
+    free(strForChecking); strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
+
+    regular = R"([1-6])";
+    std::cout << "Enter element of structure: seat, (int), [1-6]\n";
+    do { stream >> strForChecking; } while ( !std::regex_match(strForChecking, result, regular));
+    ticket.seat = (int )strForChecking[0] - 48;
+    std::cout << "seat: " << ticket.seat << std::endl;
+    free(strForChecking); strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
+
+    regular = R"(\d{4})";
+    std::cout << "Enter element of structure: price, (int), \\d{4}\n";
+    do { stream >> strForChecking; } while ( !std::regex_match(strForChecking, result, regular));
+    multiplier = 1;
+    for (j = 3; j >= 0; j--){
+        ticket.price += ((int )strForChecking[j] - 48) * multiplier;
+        multiplier *= 10;
+    }
+
+    std::cout << "price: " << ticket.price << std::endl;
+    free(strForChecking);
+
+    return stream;
+//    stream >> ticket.train;
+//    stream >> ticket.station1;
+//    stream >> ticket.station2;
+//    stream >> ticket.depDay;
+//    stream >> ticket.depTime;
+//    stream >> ticket.coach;
+//    stream >> ticket.seat;
+//    stream >> ticket.price;
+}
+
+bool Ticket::operator==(const Ticket& personalTicket) const {
+    bool f[4] = {false, false, false, false};
+    std::cmatch result;
+    std::regex regular;
+    regular = personalTicket.getStation1().c_str();
+    if (std::regex_match(this->getStation1().c_str(), result, regular))
+        f[0] = true;
+    regular = personalTicket.getStation2().c_str();
+    if (std::regex_match(this->getStation2().c_str(), result, regular))
+        f[1] = true;
+    regular = personalTicket.getDepDay().c_str();
+    if (std::regex_match(this->getDepDay().c_str(), result, regular))
+        f[2] = true;
+    if (personalTicket.getCoach() == this->getCoach())
+        f[3] = true;
+    if (f[0] && f[1] && f[2] && f[3]) {
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
+std::ofstream& operator<<(ofstream &stream, Ticket &ticket) {
+
+    stream.setf(std::ios::left);
+    stream << std::setw(5) << ticket.train;
+    stream << std::setw(16) << ticket.station1.c_str();
+    stream << std::setw(16) << ticket.station2.c_str();
+    stream << std::setw(10) << ticket.depDay.c_str();
+    stream << std::setw(10) << ticket.depTime.c_str();
+    stream << std::setw(5) << ticket.coach;
+    stream << std::setw(3) << ticket.seat;
+    stream << std::setw(4) << ticket.price << std::endl;
+
+    return stream;
+}
+/*
+ * void Ticket::inputTicket(){
+    static int i = 0;
+    static int j = 0;
+    int multiplier = 1;
+    char* strForChecking;
+    strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
+    std::cmatch result;
+    std::regex regular("[1-9]\\d{2}");
+
+    printf("Enter element of structure: train (int), [1-9]{3}\n");                                       //input Ticket: train
+    do { std::cin >> strForChecking; } while (!std::regex_match(strForChecking, result, regular));
+    for (j = 2; j >= 0; j--){
+        this->train += ((int) strForChecking[j] - 48) * multiplier;
+        multiplier*=10;
+    } multiplier = 1;
+    std::cout << "Train: " << this->train << std::endl;
+    free(strForChecking); strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
+
+    regular = "[A-Z][a-zA-Z\\s]{1,13}";
+    std::cout<<"Enter element of structure: station1, (char), [A-Z\\s]{1,15}\n";
+    do { std::cin >> strForChecking; } while (!std::regex_match(strForChecking, result, regular));
+    for (j = 0; j < numbersOfAvailableSymbols; j++) this->station1 += *(strForChecking + j);
+    std::cout << "Station1: " << this->station1 << std::endl;
+    free(strForChecking); strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
+
+    std::cout << "Enter element of structure: station2, (char), [A-Z\\s]{1,15}\n";
+    do { std::cin >> strForChecking; } while (!std::regex_match(strForChecking, result, regular));
+    for (j = 0; j < numbersOfAvailableSymbols; j++) this->station2 += *(strForChecking + j);
+    std::cout << "Station2: " << this->station2 << std::endl;
+    free(strForChecking); strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
+
+    regular = R"(\d\d\.\d\d.\d\d)";
+    std::cout << "Enter element of structure: depDay, (char), \\d\\d.\\d\\d.\\d\\d\n";
+    do { std::cin >> strForChecking; } while (!std::regex_match(strForChecking, result, regular));
+    for (j = 0; j < numbersOfAvailableSymbols; j++) this->depDay += *(strForChecking + j);
+    std::cout << "depDay: " << this->depDay << std::endl;
+    free(strForChecking); strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
+
+    regular = R"([0-2]\d:[0-5]\d:[0-5]\d)";
+    std::cout << "Enter element of structure: depTime, (char), hh:mm:ss\n";
+    do { std::cin >> strForChecking; } while ( !std::regex_match(strForChecking, result, regular) ||
+                                               (strForChecking[0] == '2') &&
+                                               ((int )strForChecking[1] - 48 > 3));
+    for (j = 0; j < numbersOfAvailableSymbols; j++) this->depTime += *(strForChecking + j);
+    std::cout << "depTime: " << this->depTime << std::endl;
+    free(strForChecking); strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
+
+    regular = R"([1-9]\d{0,2})";
+
+    std::cout << "Enter element of structure: coach, (int), [1-9]\\d{0,2}\n";
+    do { std::cin >> strForChecking; } while ( !std::regex_match(strForChecking, result, regular));
+    for (j = 0; j < numbersOfAvailableSymbols; j++) { if (strForChecking[j] == 0) break; } j--;
+    for (; j>=0; j--){
+        this->coach += ((int )strForChecking[j] - 48) * multiplier;
+        multiplier*=10;
+    }
+    std::cout << "coach: " << this->coach << std::endl;
+    free(strForChecking); strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
+
+    regular = R"([1-6])";
+    std::cout << "Enter element of structure: seat, (int), [1-6]\n";
+    do { std::cin >> strForChecking; } while ( !std::regex_match(strForChecking, result, regular));
+    this->seat = (int )strForChecking[0] - 48;
+    std::cout << "seat: " << this->seat << std::endl;
+    free(strForChecking); strForChecking = (char* ) calloc(numbersOfAvailableSymbols, sizeof(char ));
+
+    regular = R"(\d{4})";
+    std::cout << "Enter element of structure: price, (int), \\d{4}\n";
+    do { std::cin >> strForChecking; } while ( !std::regex_match(strForChecking, result, regular));
+    multiplier = 1;
+    for (j = 3; j >= 0; j--){
+        this->price += ((int )strForChecking[j] - 48) * multiplier;
+        multiplier *= 10;
+    }
+
+    std::cout << "price: " << this->price << std::endl;
+    free(strForChecking);
+}
+ * */

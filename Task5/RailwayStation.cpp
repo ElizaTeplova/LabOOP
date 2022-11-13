@@ -30,7 +30,8 @@ RailwayStation::RailwayStation(int numberOfTrainsClass, std::string& fileName, s
             inFile >> s[i];
         }
         ticket.emplace_back(new Ticket(s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7]));
-        ticket.at(sizeTrain).ticketsOutput(sizeTrain);
+//        ticket.at(sizeTrain).ticketsOutput(sizeTrain);
+        std::cout << sizeTrain << "\t" << ticket.at(sizeTrain);
         sizeTrain++;
 
     }
@@ -109,19 +110,22 @@ bool RailwayStation::isCorrect(Ticket *personalTicket, int low, int high) {
     std::cmatch result;
     std::regex regular;
     for (i = low; i <= high; i++) {
-        regular = personalTicket->getStation1().c_str();
-        if (std::regex_match(ticket.at(i).getStation1().c_str(), result, regular))
-            f[0] = true;
-        regular = personalTicket->getStation2().c_str();
-        if (std::regex_match(ticket.at(i).getStation2().c_str(), result, regular))
-            f[1] = true;
-        regular = personalTicket->getDepDay().c_str();
-        if (std::regex_match(ticket.at(i).getDepDay().c_str(), result, regular))
-            f[2] = true;
-        if (personalTicket->getCoach() == ticket.at(i).getCoach())
-            f[3] = true;
-        if (f[0] && f[1] && f[2] && f[3])
+//        regular = personalTicket->getStation1().c_str();
+//        if (std::regex_match(ticket.at(i).getStation1().c_str(), result, regular))
+//            f[0] = true;
+//        regular = personalTicket->getStation2().c_str();
+//        if (std::regex_match(ticket.at(i).getStation2().c_str(), result, regular))
+//            f[1] = true;
+//        regular = personalTicket->getDepDay().c_str();
+//        if (std::regex_match(ticket.at(i).getDepDay().c_str(), result, regular))
+//            f[2] = true;
+//        if (personalTicket->getCoach() == ticket.at(i).getCoach())
+//            f[3] = true;
+//        if (f[0] && f[1] && f[2] && f[3])
+//            return true;
+        if (static_cast<Ticket>(personalTicket) == ticket.at(i)) {
             return true;
+        }
     }
     return false;
 }
@@ -185,4 +189,11 @@ void RailwayStation::setStationAddress(char* address){
 }
 std::string RailwayStation::getStationAddress(){
     return this->stationAddress;
+}
+
+void RailwayStation::operator+=(const Ticket& copyTicket) {
+
+    ticket.emplace_back(copyTicket);
+    sizeTrain++;
+    sortTickets();
 }

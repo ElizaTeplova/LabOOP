@@ -84,6 +84,10 @@ public:
             std::string& price
            );
 
+    friend std::ostream& operator<<(std::ostream& stream, Ticket& ticket);
+    friend std::istream & operator>>(std::istream& stream, Ticket& ticket);
+    bool operator==(const Ticket& personalTicket) const;
+    friend std::ofstream& operator<<(std::ofstream& stream, Ticket& ticket);
 };
 
 #endif //TASK3_TICKET_H
