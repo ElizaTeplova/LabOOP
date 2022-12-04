@@ -30,7 +30,8 @@ private:
 //    bool            theSame = false;
 
 public:
-    Ticket& operator=(Ticket& ticket1);
+//    Ticket& operator=(Ticket& ticket1);
+    Ticket operator=(Ticket ticket);
 //    Ticket  operator=(Ticket ticket1);
 
     void inputTicket();
@@ -44,7 +45,7 @@ public:
     friend void showFlight(Ticket* ticketInfo, Ticket* personalTicket);
     friend int numberOfEmptySeats(Ticket* ticketInfo, Ticket* personalTicket, int low, int high);
     friend bool isCorrect(Ticket* ticketInfo, Ticket* personalTicket, int low, int high);
-//    friend int theMostExpensiveTicket(Ticket *ticketInfo);
+//    friend int newTheMostExpensiveTicket(Ticket *ticketInfo);
     void setTrain();
 
 //              changed version

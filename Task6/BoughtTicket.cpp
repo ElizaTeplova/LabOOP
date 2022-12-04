@@ -30,6 +30,9 @@ BoughtTicket::BoughtTicket(BoughtTicket *pTicket) {
     this->setCoach(pTicket->getCoach());
     this->setSeat(pTicket->getSeat());
     this->setPrice(pTicket->getPrice());
+    this->ownerName = pTicket->ownerName;
+    this->ownerPatronymic = pTicket->ownerPatronymic;
+    this->dateOfPurchase = pTicket->dateOfPurchase;
 }
 
 
@@ -153,5 +156,8 @@ BoughtTicket BoughtTicket::operator= (BoughtTicket rhs) {
     this->setCoach(rhs.getCoach());
     this->setSeat(rhs.getSeat());
     this->setPrice(rhs.getPrice());
+    this->ownerName = rhs.ownerName;
+    this->ownerPatronymic = rhs.ownerPatronymic;
+    this->dateOfPurchase = rhs.dateOfPurchase;
     return *this;
 }
