@@ -143,3 +143,15 @@ std::ifstream& operator>>(std::ifstream& stream, BoughtTicket& ticket) {
     std::getline(stream, b);
     return stream;
 }
+
+BoughtTicket BoughtTicket::operator= (BoughtTicket rhs) {
+    this->setTrain(rhs.getTrain());
+    this->setStation1(rhs.getStation1());
+    this->setStation2(rhs.getStation2());
+    this->setDepDay(rhs.getDepDay());
+    this->setDepTime(rhs.getDepTime());
+    this->setCoach(rhs.getCoach());
+    this->setSeat(rhs.getSeat());
+    this->setPrice(rhs.getPrice());
+    return *this;
+}

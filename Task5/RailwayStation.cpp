@@ -179,7 +179,7 @@ void RailwayStation::sortTickets(){
         }
     }
     for (i = 0; i < sizeTrain; i++)
-        ticket.at(i).ticketsOutput(i);
+        std::cout<< "i: " << ticket.at(i);
 }
 
 int RailwayStation::theMostExpensiveTicket(){

@@ -4,6 +4,7 @@
 
 #include "RailwayStation.h"
 #include "BoughtTicket.h"
+#include <algorithm>
 #include <regex>
 
 
@@ -170,11 +171,11 @@ int RailwayStation::numberOfEmptySeats(Ticket *personalTicket, int low, int high
 }
 
 void RailwayStation::sortTickets() {
-    int i, j;
+    int i = 0, j = 0;
     Ticket tmp;
 
-    for (i = 0; i < sizeTrain - 1; i++) {
-        for (j = 0; j < sizeTrain - i - 1; j++) {
+    for (i = 0; i < ticket.size() - 1; i++) {
+        for (j = 0; j < ticket.size() - i - 1; j++) {
 
             if (ticket.at(j).getTrain() > ticket.at(j + 1).getTrain()) {
 
@@ -231,32 +232,54 @@ RailwayStation::RailwayStation(std::string &filePath, std::string &fileName) {
 //        stream >> ticket1;
 //        pos = stream.tellg();
 //        stream.seekg(pos, std::ios_base::beg);
-        do {std::getline(stream, currentLine);} while (currentLine.length() == 0 || currentLine == checkLine);
+        do {std::getline(stream, currentLine);} while ((currentLine.length() == 0 || currentLine == checkLine) && !stream.eof());
         checkLine = currentLine;
 //        std::cout << "len: " << strlen(checkLine.c_str()) << std::endl;
         stream.seekg(pos, std::ios_base::beg);
 
+        if (currentLine.length() == 0) {
+            break;
+        }
+
         if (currentLine.length() > 80) {
             stream >> boughtTicket;
-            std::cout << boughtTicket; //<< std::endl;
+//            std::cout << boughtTicket; //<< std::endl;
+            boughtTicketVector.emplace_back(new BoughtTicket(boughtTicket));
             boughtTicket.clear();
             stream.seekg(pos, std::ios_base::beg);
             pos += 112;
         } else {
             stream >> ticket1;
-            std::cout << ticket1 << std::endl;
+//            std::cout << ticket1 << std::endl;
+            this->ticket.emplace_back(new Ticket(ticket1));
             boughtTicket.clear();
             stream.seekg(pos, std::ios_base::beg);
             pos += 71;
         }
 
-        if (currentLine.length() == 0) {
-            break;
-        }
+
         std::getline(stream, currentLine);
 //        system("pause");
-
-
     }
     stream.close();
+
+//    sortTickets();
+}
+bool comparator(BoughtTicket lhs, BoughtTicket rhs) {
+    return rhs.getTrain() > lhs.getTrain();
+}
+
+void RailwayStation::showAllTickets() {
+    int i;
+
+    std::cout << "Common tickets: " << std::endl;
+    for (i = 0; i < ticket.size(); i++) {
+        std::cout << ticket.at(i) << std::endl;
+    }
+    std::sort(boughtTicketVector.begin(), boughtTicketVector.end(), comparator);
+    std::cout << "Bought ticket: " << std::endl;
+    for (i = 0; i < boughtTicketVector.size(); i++) {
+        std::cout << boughtTicketVector.at(i);
+    }
+
 }

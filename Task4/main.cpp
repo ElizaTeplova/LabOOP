@@ -9,5 +9,5 @@ int main() {
     std::cin >> train;
     personalTicket.setTrain(train);
     railwayStation.showFlight(&personalTicket);
-
+    std::cout<<"The most expensive ticket price: " << railwayStation.theMostExpensiveTicket();
 }

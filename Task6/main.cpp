@@ -9,6 +9,9 @@ int main() {
     std::string fileName = "lab6_inherited_copy.txt";
 
     RailwayStation station(filePath, fileName);
+
+    station.showAllTickets();
+
     return EXIT_SUCCESS;
 
     {

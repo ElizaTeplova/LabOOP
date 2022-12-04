@@ -179,3 +179,10 @@ int RailwayStation::theMostExpensiveTicket(){
 
     return max;
 }
+
+void RailwayStation::setStationAddress(char* address){
+    this->stationAddress.assign(stationAddress);
+}
+std::string RailwayStation::getStationAddress(){
+    return this->stationAddress;
+}

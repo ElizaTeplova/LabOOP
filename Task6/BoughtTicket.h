@@ -34,6 +34,8 @@ public:
 
     friend std::ifstream &operator>>(std::ifstream& stream, BoughtTicket& ticket);
 
+    BoughtTicket operator=(BoughtTicket rhs);
+
     void clear();
 
 

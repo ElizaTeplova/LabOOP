@@ -2,6 +2,7 @@
 #include "Ticket.h"
 #include <fstream>
 #include <vector>
+#include "BoughtTicket.h"
 
 #ifndef TASK4_RAILWAYSTATION_H
 #define TASK4_RAILWAYSTATION_H
@@ -15,6 +16,7 @@ private:
 
     std::string stationAddress;
     std::vector<Ticket> ticket;
+    std::vector<BoughtTicket> boughtTicketVector;
 
     bool isCorrect(Ticket* personalTicket, int low, int high);
     int numberOfEmptySeats(Ticket* personalTicket, int low, int high);
@@ -29,14 +31,14 @@ public:
         ticket.clear();
     }
 
-    RailwayStation(std::string& filePath, std::string& fileName);
-
     void showFlight(Ticket* personalTicket);
     int theMostExpensiveTicket();
     void operator+=(const Ticket& copyTicket);
 
-//    lab6. inherited class
 
+//    lab6. inherited class
+    void showAllTickets();
+    RailwayStation(std::string& filePath, std::string& fileName);
 };
 
 
