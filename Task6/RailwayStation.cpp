@@ -6,6 +6,7 @@
 #include "BoughtTicket.h"
 #include <algorithm>
 #include <regex>
+#include <list>
 
 
 const std::string RailwayStation::DEFAULT_FILE_PATH = "C:\\files_for_projects";
@@ -52,8 +53,8 @@ RailwayStation::RailwayStation(int numberOfTrainsClass, std::string &fileName, s
 
 void RailwayStation::showFlight(Ticket *personalTicket) {
     char *strForChecking;
-    int i, low = 0, high = sizeTrain, k = 0, quantity;
-    for (i = 0; i < sizeTrain; i++) {
+    int i, low = 0, high = ticket.size(), k = 0, quantity;
+    for (i = 0; i < ticket.size(); i++) {
 
         if (ticket.at(i).getTrain() == personalTicket->getTrain()) {
             k++;
@@ -62,7 +63,7 @@ void RailwayStation::showFlight(Ticket *personalTicket) {
     }
     low = high - k + 1;
     std::cout << "high:" << high << " low: " << low << std::endl;
-    if (low == sizeTrain - 0 + 1) {
+    if (low == ticket.size() - 0 + 1) {
         std::cout << "showFlight: This train number wasn't found. Exit method..." << std::endl;
         return;
     }
@@ -232,7 +233,8 @@ RailwayStation::RailwayStation(std::string &filePath, std::string &fileName) {
 //        stream >> ticket1;
 //        pos = stream.tellg();
 //        stream.seekg(pos, std::ios_base::beg);
-        do {std::getline(stream, currentLine);} while ((currentLine.length() == 0 || currentLine == checkLine) && !stream.eof());
+        do { std::getline(stream, currentLine); }
+        while ((currentLine.length() == 0 || currentLine == checkLine) && !stream.eof());
         checkLine = currentLine;
 //        std::cout << "len: " << strlen(checkLine.c_str()) << std::endl;
         stream.seekg(pos, std::ios_base::beg);
@@ -265,21 +267,55 @@ RailwayStation::RailwayStation(std::string &filePath, std::string &fileName) {
 
 //    sortTickets();
 }
-bool comparator(BoughtTicket lhs, BoughtTicket rhs) {
+
+template<class T>
+bool comparator(T lhs, T rhs) {
     return rhs.getTrain() > lhs.getTrain();
 }
+
+//bool commonComparator(Ticket& lhs, Ticket rhs) {
+//    return rhs.getTrain() > lhs.getTrain();
+//}
 
 void RailwayStation::showAllTickets() {
     int i;
 
+    std::sort(ticket.begin(), ticket.end(), comparator<Ticket>);
     std::cout << "Common tickets: " << std::endl;
     for (i = 0; i < ticket.size(); i++) {
         std::cout << ticket.at(i) << std::endl;
     }
-    std::sort(boughtTicketVector.begin(), boughtTicketVector.end(), comparator);
+    std::sort(boughtTicketVector.begin(), boughtTicketVector.end(), comparator<BoughtTicket>);
     std::cout << "Bought ticket: " << std::endl;
     for (i = 0; i < boughtTicketVector.size(); i++) {
         std::cout << boughtTicketVector.at(i);
     }
 
+}
+
+template<class T>
+bool comparatorPrice(T lhs, T rhs) {
+    return rhs.getPrice() > lhs.getPrice();
+}
+
+int RailwayStation::newTheMostExpensiveTicket(bool f) {
+    Ticket t;
+
+    std::vector<Ticket>::iterator ticketTt;
+    const std::vector<Ticket>::iterator &it =
+            std::max_element(ticket.begin(), ticket.end(),
+                             [](Ticket lhs, Ticket rhs) {
+                                 return lhs.getPrice() < rhs.getPrice();
+                             });
+
+    std::cout << "The most expensive common ticket: " << it->getPrice();
+
+    const std::vector<BoughtTicket>::iterator &boughtIt =
+            std::max_element(boughtTicketVector.begin(), boughtTicketVector.end(), [](BoughtTicket lhs, BoughtTicket rhs) {
+                return lhs.getPrice() < rhs.getPrice();
+            });
+
+    std::cout << "The most expensive common ticket: " << boughtIt->getPrice() << std::endl;
+
+    return std::max(it->getPrice(), boughtIt->getPrice());
 }

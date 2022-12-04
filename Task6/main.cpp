@@ -7,10 +7,18 @@ int main() {
 
     std::string filePath = "C:\\files_for_projects";
     std::string fileName = "lab6_inherited_copy.txt";
+    Ticket personalTicket;
+    int train;
 
     RailwayStation station(filePath, fileName);
 
     station.showAllTickets();
+    std::cout << station.newTheMostExpensiveTicket(true) << std::endl;
+
+    std::cout << "Enter train number: ";
+    std::cin >> train;
+    personalTicket.setTrain(train);
+    station.showFlight(&personalTicket);
 
     return EXIT_SUCCESS;
 

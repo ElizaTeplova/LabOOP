@@ -29,6 +29,7 @@ public:
     RailwayStation(int numberOfTrainsClass, std::string& fileName, std::string& filePath);
     ~RailwayStation(){
         ticket.clear();
+        boughtTicketVector.clear();
     }
 
     void showFlight(Ticket* personalTicket);
@@ -39,6 +40,7 @@ public:
 //    lab6. inherited class
     void showAllTickets();
     RailwayStation(std::string& filePath, std::string& fileName);
+    int newTheMostExpensiveTicket(bool f);
 };
 
 

@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Ticket &Ticket::operator=(Ticket &ticket1) = default;
+//Ticket &Ticket::operator=(Ticket &ticket1) = default;
 
 //                             first part: write to file
 void Ticket::inputTicket() {
@@ -299,7 +299,7 @@ bool isCorrect(Ticket *ticketInfo, Ticket *personalTicket, int low, int high) {
 //    std::regex_match(strForChecking, result, regular)
 }
 
-//int theMostExpensiveTicket(Ticket *ticketInfo){
+//int newTheMostExpensiveTicket(Ticket *ticketInfo){
 //    int i, max = 0;
 //    for (i = 0; i < numberOfTrains; i++)
 //        if (max < (ticketInfo + i)->price)  max = (ticketInfo + i)->price;
@@ -647,4 +647,16 @@ int Ticket::setAllInfoFromLine(std::string &line) {
     std::cout << "price: " << price << std::endl;
 
     return 70;
+}
+
+Ticket Ticket::operator= (Ticket rhs) {
+    this->setTrain(rhs.getTrain());
+    this->setStation1(rhs.getStation1());
+    this->setStation2(rhs.getStation2());
+    this->setDepDay(rhs.getDepDay());
+    this->setDepTime(rhs.getDepTime());
+    this->setCoach(rhs.getCoach());
+    this->setSeat(rhs.getSeat());
+    this->setPrice(rhs.getPrice());
+    return *this;
 }
