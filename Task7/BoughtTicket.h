@@ -36,7 +36,12 @@ public:
 
     BoughtTicket operator=(BoughtTicket rhs);
 
-    void clear();
+    virtual void clear();
+
+//    lab7
+    virtual void info();
+
+    virtual void writeToFile(std::ofstream& stream);
 
 
 private:

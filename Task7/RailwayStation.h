@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include "BoughtTicket.h"
+#include "ElectronicTicket.h"
 
 #ifndef TASK4_RAILWAYSTATION_H
 #define TASK4_RAILWAYSTATION_H
@@ -17,10 +18,16 @@ private:
     std::string stationAddress;
     std::vector<Ticket> ticket;
     std::vector<BoughtTicket> boughtTicketVector;
+    std::vector<ElectronicTicket> electronicTicketVector;
+
+    std::vector<Ticket* > allTicket;
 
     bool isCorrect(Ticket* personalTicket, int low, int high);
     int numberOfEmptySeats(Ticket* personalTicket, int low, int high);
     void sortTickets();
+
+//    lab7
+    void unionAllTicket();
 public:
 
     void setStationAddress(char* address);
@@ -41,6 +48,11 @@ public:
     void showAllTickets();
     RailwayStation(std::string& filePath, std::string& fileName);
     int newTheMostExpensiveTicket(bool f);
+
+//    lab7. dynamic polymorphism
+    RailwayStation(std::string& filePath, std::string& fileName, bool flagLab7);
+    int newTheMostExpensiveTicketLab7();
+    void printToFileAllTickets(std::ofstream& stream);
 };
 
 

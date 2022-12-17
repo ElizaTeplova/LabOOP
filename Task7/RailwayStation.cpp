@@ -246,6 +246,7 @@ RailwayStation::RailwayStation(std::string &filePath, std::string &fileName) {
         if (currentLine.length() > 80) {
             stream >> boughtTicket;
 //            std::cout << boughtTicket; //<< std::endl;
+            std::cout << currentLine.length() << std::endl;
             boughtTicketVector.emplace_back(new BoughtTicket(boughtTicket));
             boughtTicket.clear();
             stream.seekg(pos, std::ios_base::beg);
@@ -269,7 +270,6 @@ RailwayStation::RailwayStation(std::string &filePath, std::string &fileName) {
 }
 
 
-
 //bool commonComparator(Ticket& lhs, Ticket rhs) {
 //    return rhs.getTrain() > lhs.getTrain();
 //}
@@ -289,7 +289,7 @@ void RailwayStation::showAllTickets() {
     std::sort(boughtTicketVector.begin(), boughtTicketVector.end(), comparator<BoughtTicket>);
     std::cout << "Bought ticket: " << std::endl;
     for (i = 0; i < boughtTicketVector.size(); i++) {
-        std::cout << boughtTicketVector.at(i);
+        std::cout << boughtTicketVector.at(i) << std::endl;
     }
 
 }
@@ -312,11 +312,125 @@ int RailwayStation::newTheMostExpensiveTicket(bool f) {
     std::cout << "The most expensive common ticket: " << it->getPrice() << std::endl;
 
     const std::vector<BoughtTicket>::iterator &boughtIt =
-            std::max_element(boughtTicketVector.begin(), boughtTicketVector.end(), [](BoughtTicket lhs, BoughtTicket rhs) {
-                return lhs.getPrice() < rhs.getPrice();
-            });
+            std::max_element(boughtTicketVector.begin(), boughtTicketVector.end(),
+                             [](BoughtTicket lhs, BoughtTicket rhs) {
+                                 return lhs.getPrice() < rhs.getPrice();
+                             });
 
     std::cout << "The most expensive common ticket: " << boughtIt->getPrice() << std::endl;
 
     return std::max(it->getPrice(), boughtIt->getPrice());
+}
+
+RailwayStation::RailwayStation(std::string &filePath, std::string &fileName, bool flagLab7) {
+    std::ifstream stream;
+    std::string currentLine;
+
+    stream.open(filePath + "\\" + fileName, std::ios::in);
+
+    if (!stream.is_open()) {
+        std::cerr << "file doesn't exist" << std::endl;
+        return;
+    }
+    int pos = 0;
+    int add = 0;
+    Ticket ticket1;
+    BoughtTicket boughtTicket;
+    ElectronicTicket electronicTicket;
+    std::string checkLine;
+    while (!stream.eof()) {
+
+        do { std::getline(stream, currentLine); }
+        while ((currentLine.length() == 0 || currentLine == checkLine) && !stream.eof());
+        checkLine = currentLine;
+//        std::cout << "len: " << strlen(checkLine.c_str()) << std::endl;
+        stream.seekg(pos, std::ios_base::beg);
+
+        if (currentLine.length() == 0) {
+            break;
+        }
+
+        if (currentLine.length() == 110) {
+//            std::cout << "line.length: " << currentLine.length() << std::endl;
+            stream >> boughtTicket;
+            std::cout << boughtTicket << std::endl;
+            boughtTicketVector.emplace_back(new BoughtTicket(boughtTicket));
+            boughtTicket.clear();
+            stream.seekg(pos, std::ios_base::beg);
+            pos += 112;
+        } else if (currentLine.length() > 80) {
+//            std::cout << "line.length: " << currentLine.length() << std::endl;
+            stream >> electronicTicket;
+            electronicTicketVector.emplace_back(new ElectronicTicket(electronicTicket));
+            std::cout << electronicTicket << std::endl;
+            stream.seekg(pos, std::ios_base::beg);
+            pos += currentLine.length() + 2;
+        } else {
+//            std::cout << "line.length: " << currentLine.length() << std::endl;
+            stream >> ticket1;
+            std::cout << ticket1 << std::endl;
+            this->ticket.emplace_back(new Ticket(ticket1));
+            boughtTicket.clear();
+            stream.seekg(pos, std::ios_base::beg);
+            pos += 71;
+        }
+
+
+        std::getline(stream, currentLine);
+//        system("pause");
+    }
+    stream.close();
+
+    unionAllTicket();
+//    system("pause");
+}
+
+void RailwayStation::unionAllTicket() {
+    int j = 0;
+    int i = 0;
+
+    for (i = 0; i < ticket.size(); i++) {
+        allTicket.emplace_back(new Ticket);
+        allTicket.at(j) = &ticket.at(i);
+        j++;
+    }
+
+    for (i = 0; i < boughtTicketVector.size(); i++) {
+        allTicket.emplace_back(new Ticket);
+        allTicket.at(j) = &boughtTicketVector.at(i);
+        j++;
+    }
+
+    for (i = 0; i < electronicTicketVector.size(); i++) {
+        allTicket.emplace_back(new Ticket);
+        allTicket.at(j) = &electronicTicketVector.at(i);
+        j++;
+    }
+
+    for (i = 0; i < allTicket.size(); i++) {
+        std::cout << std::setw(3) << i;
+        allTicket.at(i)->info();
+        std::cout<<std::endl;
+    }
+}
+
+int RailwayStation::newTheMostExpensiveTicketLab7() {
+    Ticket t;
+
+    std::vector<Ticket>::iterator ticketTt;
+    const std::vector<Ticket*>::iterator &it =
+            std::max_element(allTicket.begin(), allTicket.end(),
+                             [](Ticket* lhs, Ticket* rhs) {
+                                 return lhs->getPrice() < rhs->getPrice();
+                             });
+
+    return it[0]->getPrice();;
+}
+
+void RailwayStation::printToFileAllTickets(std::ofstream& stream) {
+
+    for (int i  = 0; i < allTicket.size(); i++) {
+        allTicket.at(i)->writeToFile(stream);
+        stream<<std::endl;
+    }
 }

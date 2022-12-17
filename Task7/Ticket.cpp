@@ -660,3 +660,24 @@ Ticket Ticket::operator= (Ticket rhs) {
     this->setPrice(rhs.getPrice());
     return *this;
 }
+
+// lab7
+void Ticket::info() {
+    std::cout.setf(std::ios_base::left);
+    std::cout << std::setw(15) << this->station1;
+    std::cout << std::setw(15) << this->station2;
+    std::cout << std::setw(10) << this->depDay;
+    std::cout << std::setw(10) << this->depTime;
+    std::cout << std::setw(3) << this->coach;
+    std::cout << std::setw(3) << this->seat;
+    std::cout << std::setw(6) << this->price;
+}
+
+void Ticket::writeToFile(std::ofstream& stream) {
+    if (!stream.is_open()) {
+        std::cerr << "writeToFile: File wasn't opened. Operation prohibited" << std::endl;
+        return;
+    }
+
+    stream << *this;
+}

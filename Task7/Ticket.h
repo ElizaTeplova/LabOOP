@@ -93,7 +93,10 @@ public:
     friend std::ifstream& operator>>(std::ifstream& stream, Ticket& ticket);
 
 //    lab6
-    void clear();
+    virtual void clear();
+//    lab7
+    virtual void info();
+    virtual void writeToFile(std::ofstream& stream);
 };
 
 #endif //TASK3_TICKET_H

@@ -97,7 +97,7 @@ std::ostream &operator<<(std::ostream &stream, BoughtTicket &ticket) {
     stream.setf(std::ios_base::left);
     stream << std::setw(numbersOfAvailableSymbols) << ticket.ownerName;
     stream << std::setw(numbersOfAvailableSymbols) << ticket.ownerPatronymic;
-    stream << std::setw(numbersOfAvailableSymbols) << ticket.dateOfPurchase << std::endl;
+    stream << std::setw(numbersOfAvailableSymbols) << ticket.dateOfPurchase;
 
     return stream;
 }
@@ -106,7 +106,7 @@ std::ofstream &operator<<(std::ofstream &stream, BoughtTicket &ticket) {
     stream << static_cast<Ticket &>(ticket) << " ";
     stream << std::setw(numbersOfAvailableSymbols) << ticket.ownerName;
     stream << std::setw(numbersOfAvailableSymbols) << ticket.ownerPatronymic;
-    stream << std::setw(10) << ticket.dateOfPurchase << std::endl;
+    stream << std::setw(10) << ticket.dateOfPurchase; //<< std::endl;
 
     return stream;
 }
@@ -160,4 +160,24 @@ BoughtTicket BoughtTicket::operator= (BoughtTicket rhs) {
     this->ownerPatronymic = rhs.ownerPatronymic;
     this->dateOfPurchase = rhs.dateOfPurchase;
     return *this;
+}
+
+//   lab7
+void BoughtTicket::info() {
+    Ticket::info();
+
+
+    std::cout.setf(std::ios_base::left);
+    std::cout << std::setw(15) << this->ownerName;
+    std::cout << std::setw(15) << this->ownerPatronymic;
+    std::cout << std::setw(15) << this->dateOfPurchase;
+}
+
+void BoughtTicket::writeToFile(std::ofstream& stream) {
+    if (!stream.is_open()) {
+        std::cerr << "writeToFile: File wasn't opened. Operation prohibited" << std::endl;
+        return;
+    }
+
+    stream << *this;
 }

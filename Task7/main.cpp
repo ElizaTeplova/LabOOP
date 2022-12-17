@@ -4,21 +4,23 @@
 #include "BoughtTicket.h"
 
 int main() {
-
+// lab7_copy.txt
     std::string filePath = "C:\\files_for_projects";
-    std::string fileName = "lab6_inherited_copy.txt";
+    std::string fileName = "lab7_copy.txt";
     Ticket personalTicket;
     int train;
+    std::ofstream file;
+    file.open(filePath + "\\" + "example_lab7.txt", std::ios::out|std::ios::trunc);
+    RailwayStation station(filePath, fileName, true);
 
-    RailwayStation station(filePath, fileName);
-
-    station.showAllTickets();
-    std::cout << station.newTheMostExpensiveTicket(true) << std::endl;
-
-    std::cout << "Enter train number: ";
-    std::cin >> train;
-    personalTicket.setTrain(train);
-    station.showFlight(&personalTicket);
+//    station.showAllTickets();
+    std::cout << station.newTheMostExpensiveTicketLab7() << std::endl;
+    station.printToFileAllTickets(file);
+    file.close();
+//    std::cout << "Enter train number: ";
+//    std::cin >> train;
+//    personalTicket.setTrain(train);
+//    station.showFlight(&personalTicket);
 
     return EXIT_SUCCESS;
 
